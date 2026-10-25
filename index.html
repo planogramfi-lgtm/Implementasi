@@ -1,7 +1,12 @@
-<!DOCTYPE html><html><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monitoring Foto Implementasi</title>
-<link rel="stylesheet" href="../assets/style.css">
-<style>
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upload Implementasi Planogram</title>
+<link rel="stylesheet" href="style.css">
+  <style>
     /* ===== Riwayat & Dashboard ===== */
     .dx-card{background:#fff;border:1px solid #dbe4f0;border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 1px 4px rgba(15,40,80,.07)}
     .dx-t{display:flex;justify-content:space-between;align-items:baseline;margin:16px 0 6px}.dx-t b{font-size:16px;color:#12355b}.dx-t small{color:#6b7c93;font-size:12.5px}
@@ -32,43 +37,236 @@
     .dy i{display:block;width:100%;background:#7FC79A;border-radius:6px 6px 0 0;min-height:3px}.dy b{font-size:11.5px;color:#12355b}.dy small{font-size:10.5px;color:#6b7c93}
     .lg2{font-size:12.5px;color:#5b6b7d;background:#f4f7fb;border-radius:10px;padding:8px 10px;margin:6px 0}
     .bl{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:#FDEDED;border:1px solid #F5C6C6;margin:6px 0;font-size:13px}.bl small{color:#8E2A2A;font-size:11.5px;white-space:nowrap}
-    .tl-g{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0}
-    .tl{border-radius:14px;padding:10px 12px;border:1px solid;border-left-width:6px;cursor:pointer}
-    .tl.ok{background:#E8F5EC;border-color:#BFE3CA;border-left-color:#4CAF73}.tl.no{background:#FDEDED;border-color:#F5C6C6;border-left-color:#E57373}.tl.sel{box-shadow:0 0 0 2px #12355b}
-    .tl b{font-size:14px;color:#1d2b3a;display:block}.tl .pp{font-size:24px;font-weight:800;line-height:1.15}.tl.ok .pp{color:#1B5E32}.tl.no .pp{color:#8E2A2A}
-    .tl small{color:#5b6b7d;font-size:11.5px;display:block}.tl .bar{height:6px;border-radius:6px;background:rgba(0,0,0,.08);margin-top:6px;overflow:hidden}.tl .bar i{display:block;height:100%;background:#4CAF73}
-    .st .ft{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
-</style></head><body>
-<header><h1>🔎 Monitoring Foto Implementasi</h1><p>Dashboard upload implementasi dari branch & toko</p></header>
-<div class="tabs"><button class="on" data-t="d">📊 Dashboard</button><button data-t="f">🔎 Lihat Foto</button></div>
+    .o small{display:block;font-size:11px;color:#5c88b2;margin-top:2px}
+    .pvw summary{cursor:pointer;font-weight:800;color:#12355b;font-size:15px}.pvw .src{font-size:12.5px;color:#5b6b7d;margin:4px 0 8px}
+    .pvw table td.na{color:#9aa0a6}.pvw tr.mut td{opacity:.5}
+    .blk .bh{display:flex;justify-content:space-between;align-items:center}.blk .bh b{color:#12355b;font-size:15px}
+    .sm{background:#f4f7fb;border-radius:10px;padding:8px 10px;margin:8px 0;font-size:13px;color:#33465c}
+    .sm i{display:block;height:7px;border-radius:7px;background:#F5C6C6;margin-top:6px;overflow:hidden}.sm i b{display:block;height:100%;background:#4CAF73}
+    .slot{border-top:1px dashed #dbe4f0;margin-top:10px;padding-top:8px}.slot:first-child{border-top:0;margin-top:0;padding-top:0}
+    .vl{font-size:12px;font-weight:800;margin:6px 0 2px}.vl.rg{color:#1E4FA8}.vl.nr{color:#8A5200}
+    .chs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 6px}
+    .ch{border:1.5px solid #cfd9e6;background:#fff;border-radius:10px;padding:8px 12px;font-size:14px;font-weight:700;color:#33465c;cursor:pointer}
+    .ch.on{background:#4CAF73;border-color:#4CAF73;color:#fff}.ch.tk{background:#E8F5EC;border-color:#BFE3CA;color:#1B5E32;cursor:default}.ch.ot{opacity:.35;cursor:default}
+    .okk{background:#E8F5EC;color:#1B5E32;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;margin:6px 0}
+    .nop{background:#FFF6E0;border:1px solid #F1D9A0;border-radius:12px;padding:12px;font-size:13.5px;color:#6b5200;margin:14px 0}
+  </style>
+</head>
+<body>
+<header>
+  <h1>🏪 Form Upload Implementasi</h1>
+  <p>Upload foto implementasi rak sesuai Info Posting HO</p>
+</header>
+<div class="tabs"><button class="on" data-t="f">📸 Upload</button><button data-t="h">🕘 Riwayat</button><button data-t="d">📊 Dashboard</button></div>
 <main>
-<section id="d" class="tab"><label class="l">Periode Info Posting</label><select id="dp"></select><div id="dres"><p class="mut">Memuat…</p></div></section>
-<section id="f" class="tab" hidden>
-<label class="l">Tanggal Info Posting</label><div><input id="tgl" placeholder="Pilih tanggal (hanya hari Senin)"></div>
-<p class="warn">⚠️ Tanggal harus sesuai dengan info posting.</p>
-<label class="l">Branch</label><input id="br" placeholder="Cari branch…">
-<label class="l">Kode Toko (kosongkan = semua toko)</label><input id="kt" placeholder="Pilih branch dulu…">
-<label class="l">No Rak (kosongkan = semua rak)</label><input id="rk" placeholder="Ketik no rak, contoh: AA1" autocomplete="off">
-<button class="btn" id="go">Tampilkan</button>
-<div id="list"></div>
-<div id="stg" hidden><p id="cap" style="font-weight:600"></p><img id="im" class="pv" style="max-height:none"><button class="btn" id="dl">⬇️ Download</button></div>
+<section id="f" class="tab">
+  <label class="l">1. Tanggal Info Posting</label>
+  <div><input id="tgl" placeholder="Pilih tanggal (hanya hari Senin)…"></div>
+  <p class="warn">Harus sesuai dengan Info Posting</p>
+  <label class="l">2. Branch / Cabang</label>
+  <input id="branch" placeholder="Pilih branch…">
+  <div id="prev"></div>
+  <div id="upl" hidden>
+    <label class="l">3. Upload per Tipe Toko <small style="font-weight:400;color:#5b6b7d">(boleh beberapa tipe toko sekaligus)</small></label>
+    <div id="blocks"></div>
+    <button class="btn s" id="addb" style="width:100%">＋ Tambah Tipe Toko Lain</button>
+    <button class="btn" id="go" style="margin-top:12px">Kirim Foto Implementasi</button>
+  </div>
+</section>
+<section id="h" class="tab" hidden>
+  <label class="l">Branch</label><input id="hbr" placeholder="Pilih branch…">
+  <label class="l">Periode Info Posting</label><select id="hp"></select>
+  <div id="hres"><p class="mut">Pilih branch untuk melihat status upload toko</p></div>
+</section>
+<section id="d" class="tab" hidden>
+  <label class="l">Periode Info Posting</label><select id="dp"></select>
+  <div id="dres"><p class="mut">Memuat…</p></div>
 </section>
 </main>
-<div id="toast"></div><div id="ov"><div><h2>✅ Berhasil</h2><p id="ovm"></p><button class="btn" onclick="$('ov').style.display='none'">OK</button></div></div>
-<script src="../config.js"></script>
-<script src="../assets/api.js"></script>
-<script src="../assets/lib.js"></script>
-<script>
-let M = {branches: []}, S = {}, ITEMS = [], cur = null, BLOB = null, DD = null, DBR = '', DF = {st: '', t: '', q: '', n: 30};
-const stg = $('stg'); Cal($('tgl'));
-const fmtT = w => w ? w.slice(8, 10) + '/' + w.slice(5, 7) + ' ' + w.slice(11, 16) : '-';
 
-// ================= DASHBOARD =================
+<div id="toast"></div><div id="ov"><div><h2>✅ Berhasil</h2><p id="ovm"></p><button class="btn" onclick="$('ov').style.display='none'">OK</button></div></div>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="lib.js"></script>
+
+<script>
+let M = {branches: []}, OPT = null, BL = [], SEQ = 0;
+const U = x => String(x || '').trim().toUpperCase();
+function checkMonday(s) { const p = String(s || '').split('-'); return p.length === 3 && new Date(Date.UTC(p[0], p[1] - 1, p[2])).getUTCDay() === 1; }
+Cal($('tgl'));
+
+function drawPrev() {
+  const p = OPT.preview, br = OPT.branch;
+  const note = p.sumber === 'spreadsheet' ? 'Sumber: spreadsheet Info Posting' : 'Sumber: data Info Posting HO' + (p.sheetDate ? ' (spreadsheet sedang menampilkan tanggal ' + esc(p.sheetDate) + ')' : '');
+  const cell = t => t ? esc(t) : '<span class="na">-</span>';
+  $('prev').innerHTML = '<details class="dx-card pvw" open><summary>📄 Preview Info Posting • ' + esc(br) + '</summary><div class="src">' + note + '. Upload hanya no rak yang tertulis di sini.</div><div class="wrap"><table><tr><th>Tipe Toko</th><th>Kode</th><th>Jenis</th><th>Rak Reguler</th><th>Rak Non Reguler</th><th>Keterangan</th></tr>'
+    + p.rows.map(r => {
+      if (r.sec) { const red = /SUPER|FRESH/.test(r.sec); return '<tr><td colspan="6" style="font-weight:800;background:' + (red ? '#ff0000;color:#000' : '#008000;color:#fff') + '">' + esc(r.sec) + '</td></tr>'; }
+      const has = r.reg || r.nr;
+      return '<tr' + (has ? '' : ' class="mut"') + '><td>' + esc(r.u) + '</td><td>' + esc(r.k) + '</td><td>' + esc(r.j) + '</td><td>' + cell(r.reg) + '</td><td>' + cell(r.nr) + '</td><td>' + cell(r.ket) + '</td></tr>';
+    }).join('') + '</table></div></details>';
+}
+function loadOpt() {
+  OPT = null; BL = []; $('blocks').innerHTML = ''; $('prev').innerHTML = ''; $('upl').hidden = true;
+  const tgl = $('tgl').value.trim(), br = $('branch').value.trim();
+  if (!tgl || !br || !M.branches.includes(br)) return;
+  if (!checkMonday(tgl)) { toast('⚠️ Tanggal Info Posting harus hari Senin!', 0); return; }
+  const id = ++SEQ; $('prev').innerHTML = '<p class="mut">Memuat preview info posting…</p>';
+  google.script.run.withSuccessHandler(r => {
+    if (id !== SEQ) return; OPT = r; drawPrev(); $('upl').hidden = false;
+    if (!r.tipes.length) { $('blocks').innerHTML = '<div class="nop">⚠️ HO belum mengisi no rak untuk branch ini pada tanggal tersebut. Cek kembali tanggal info posting.</div>'; $('addb').hidden = true; $('go').hidden = true; return; }
+    $('addb').hidden = false; $('go').hidden = false; addBlock();
+  }).withFailureHandler(e => { if (id === SEQ) $('prev').innerHTML = '<p class="mut">' + esc(e.message) + '</p>'; }).getImplOptions(tgl, br);
+}
+function renum() { BL.forEach((b, i) => b.el.querySelector('.bt').textContent = 'Tipe Toko #' + (i + 1)); }
+function addBlock() {
+  const b = {tipe: null, store: null, taken: {'REGULER': [], 'NON REGULER': []}, slots: []}; BL.push(b);
+  const el = document.createElement('div'); el.className = 'dx-card blk'; b.el = el;
+  el.innerHTML = '<div class="bh"><b class="bt"></b><button type="button" class="x" data-xb="1">✕</button></div>'
+    + '<label class="l">Tipe Toko</label><div><input class="tp" placeholder="Pilih tipe toko…"></div>'
+    + '<label class="l">Kode Toko</label><div><input class="kt" placeholder="Pilih tipe toko dulu…"></div><div class="sl"></div>';
+  $('blocks').appendChild(el); renum();
+  b.tp = el.querySelector('.tp'); b.kt = el.querySelector('.kt');
+  Combo(b.tp, OPT.tipes.map(t => t.label)); b.tp._title = 'Tipe Toko'; b.tp._noall = 1;
+  Combo(b.kt, []); b.kt._title = 'Kode Toko'; b.kt._noall = 1;
+  b.kt._guard = () => { if (!b.tipe) { warn(b.tp, 'Tipe Toko'); return true; } return false; };
+  b.tp.addEventListener('change', () => {
+    b.tipe = OPT.tipes.find(t => t.label === b.tp.value) || null; b.store = null; b.slots = []; b.kt.value = '';
+    b.kt._arr = b.tipe ? b.tipe.stores.map(s => s.kode + ' - ' + s.nama) : [];
+    b.kt.placeholder = b.tipe ? (b.tipe.stores.length ? 'Pilih kode toko…' : 'Tidak ada toko bertipe ini di branch') : 'Pilih tipe toko dulu…';
+    drawSlots(b);
+  });
+  b.kt.addEventListener('change', () => {
+    const s = b.tipe && b.tipe.stores.find(x => x.kode + ' - ' + x.nama === b.kt.value); if (!s) return;
+    b.store = s; b.slots = []; b.el.querySelector('.sl').innerHTML = '<p class="mut">Memuat status upload toko…</p>';
+    google.script.run.withSuccessHandler(t => { if (b.store !== s) return; b.taken = t; b.slots = [{sel: [], v: '', d: ''}]; drawSlots(b); })
+      .withFailureHandler(e => toast(e.message, 0)).getStoreTaken($('tgl').value.trim(), $('branch').value.trim(), s.kode);
+  });
+}
+function drawSlots(b) {
+  const box = b.el.querySelector('.sl'); if (!b.store) { box.innerHTML = ''; return; }
+  const t = b.tipe, tk = b.taken, V = ['REGULER', 'NON REGULER'], list = {'REGULER': t.reg, 'NON REGULER': t.nr};
+  const used = {'REGULER': new Set(), 'NON REGULER': new Set()}; b.slots.forEach(s => s.sel.forEach(x => used[s.v].add(x)));
+  let total = 0, dn = 0; V.forEach(v => list[v].forEach(x => { total++; if (tk[v].includes(x)) dn++; }));
+  let h = '<div class="sm"><b>' + esc(b.store.nama) + '</b> (' + esc(b.store.kode) + ')<br>' + dn + ' dari ' + total + ' rak sudah diupload' + (dn < total ? ' • sisa ' + (total - dn) : ' 🎉') + '<i><b style="width:' + (total ? Math.round(dn * 100 / total) : 0) + '%"></b></i></div>';
+  if (dn >= total) { box.innerHTML = h + '<div class="okk">✓ Semua rak toko ini sudah diupload</div>'; return; }
+  h += '<p class="mut" style="text-align:left;margin:4px 0"><small>Ketuk no rak yang difoto (1 foto boleh untuk beberapa rak), lalu ambil foto.</small></p>';
+  b.slots.forEach((s, si) => {
+    h += '<div class="slot">';
+    V.forEach(v => { if (!list[v].length) return;
+      h += '<div class="vl ' + (v === 'REGULER' ? 'rg' : 'nr') + '">Rak ' + (v === 'REGULER' ? 'Reguler' : 'Non Reguler') + '</div><div class="chs">' + list[v].map(x => {
+        const c = tk[v].includes(x) ? 'tk' : (s.v === v && s.sel.includes(x) ? 'on' : (used[v].has(x) ? 'ot' : ''));
+        return '<button type="button" class="ch ' + c + '" data-s="' + si + '" data-v="' + v + '" data-r="' + esc(x) + '">' + (c === 'tk' ? '✓ ' : '') + esc(x) + '</button>'; }).join('') + '</div>'; });
+    h += '<label class="btn s">📷 Kamera<input type="file" accept="image/*" capture="environment" hidden data-s="' + si + '"></label><label class="btn s">🖼️ Galeri<input type="file" accept="image/*" hidden data-s="' + si + '"></label>'
+      + (b.slots.length > 1 ? '<button type="button" class="btn s" data-rm="' + si + '">✕ Hapus foto ini</button>' : '') + (s.d ? '<img class="pv" src="' + s.d + '">' : '') + '</div>';
+  });
+  if (V.some(v => list[v].some(x => !tk[v].includes(x) && !used[v].has(x)))) h += '<button type="button" class="btn s" style="width:100%;margin-top:8px" data-add="1">＋ Foto lain untuk rak yang tersisa</button>';
+  box.innerHTML = h;
+}
+const blkOf = e => { const el = e.target.closest('.blk'); return el ? BL.find(b => b.el === el) : null; };
+$('blocks').addEventListener('click', e => {
+  const b = blkOf(e); if (!b) return;
+  const lb = e.target.closest('label.btn');
+  if (lb) { const f = lb.querySelector('input'); if (f && !b.slots[+f.dataset.s].sel.length) { e.preventDefault(); toast('Pilih no rak dulu sebelum ambil foto', 0); } return; }
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.xb) { if (BL.length > 1) { b.el.remove(); BL.splice(BL.indexOf(b), 1); renum(); } return; }
+  if (t.dataset.r) { if (t.classList.contains('tk') || t.classList.contains('ot')) return;
+    const s = b.slots[+t.dataset.s], v = t.dataset.v, r = t.dataset.r; if (s.v !== v) { s.sel = []; s.v = v; }
+    const i = s.sel.indexOf(r); i < 0 ? s.sel.push(r) : s.sel.splice(i, 1); if (!s.sel.length) s.v = ''; drawSlots(b); }
+  else if (t.dataset.add) { b.slots.push({sel: [], v: '', d: ''}); drawSlots(b); }
+  else if (t.dataset.rm) { b.slots.splice(+t.dataset.rm, 1); drawSlots(b); }
+});
+$('blocks').addEventListener('change', e => { const f = e.target, b = blkOf(e); if (!b || f.type !== 'file' || !f.files[0]) return;
+  const s = b.slots[+f.dataset.s]; compress(f.files[0], u => { s.d = u; drawSlots(b); }); });
+$('addb').onclick = () => {
+  for (const b of BL) { if (!b.tipe) { warn(b.tp, 'Tipe Toko'); return; } if (!b.store) { warn(b.kt, 'Kode Toko'); return; }
+    if (!b.slots.some(s => s.d)) { toast('Lengkapi foto untuk tipe toko sebelumnya dulu', 0); b.el.scrollIntoView({block: 'center'}); return; } }
+  addBlock(); BL[BL.length - 1].el.scrollIntoView({behavior: 'smooth', block: 'start'});
+};
+$('go').onclick = () => {
+  try {
+    if (!OPT) throw 'Pilih tanggal & branch dulu';
+    const blocks = [], seen = {};
+    BL.forEach((b, i) => {
+      if (!b.tipe) throw 'Tipe toko #' + (i + 1) + ' belum dipilih';
+      if (!b.store) throw 'Kode toko untuk tipe toko #' + (i + 1) + ' belum dipilih';
+      if (seen[b.store.kode]) throw 'Toko ' + b.store.kode + ' dipilih dua kali, gabungkan dalam satu blok';
+      seen[b.store.kode] = 1; const files = [];
+      b.slots.forEach(s => {
+        if (s.sel.length && !s.d) throw 'Foto belum dipilih untuk rak ' + s.sel.join(', ') + ' (toko ' + b.store.kode + ')';
+        if (!s.sel.length && s.d) throw 'Ada foto yang belum dipilih no raknya (toko ' + b.store.kode + ')';
+        if (s.d) files.push({raks: s.sel.slice(), variant: s.v, data: s.d.split(',')[1]});
+      });
+      if (!files.length) throw 'Belum ada foto untuk toko ' + b.store.kode;
+      blocks.push({kode: b.store.kode, files: files});
+    });
+    $('go').disabled = true; $('go').textContent = 'Mengirim…';
+    google.script.run.withSuccessHandler(n => { $('go').disabled = false; $('go').textContent = 'Kirim Foto Implementasi'; done(n + ' foto implementasi berhasil diupload untuk ' + blocks.length + ' toko'); loadOpt(); })
+      .withFailureHandler(e => { $('go').disabled = false; $('go').textContent = 'Kirim Foto Implementasi'; toast(e.message, 0); })
+      .saveImplBatch({periode: $('tgl').value.trim(), branch: $('branch').value.trim(), blocks: blocks});
+  } catch (e) { toast(typeof e === 'string' ? e : e.message, 0); }
+};
+google.script.run.withSuccessHandler(m => {
+  M = m || M; Combo($('branch'), M.branches || []); $('branch')._title = 'Branch'; initPanels();
+  Seq([{el: $('tgl'), label: 'Tanggal Info Posting'}, {el: $('branch'), label: 'Branch'}]);
+  $('tgl').onchange = loadOpt; $('branch').onchange = loadOpt;
+}).getMasters();
+
+// ================= RIWAYAT UPLOAD (status kirim per toko) =================
+let RH = null, RF = {st:'', v:'', t:'', q:'', n:40};
+const fmtT = w => w ? w.slice(8,10) + '/' + w.slice(5,7) + ' ' + w.slice(11,16) : '-';
+function loadRiw(p) {
+  const b = $('hbr').value.trim();
+  if (!M || !M.branches.includes(b)) { $('hres').innerHTML = '<p class="mut">Pilih branch untuk melihat status upload toko</p>'; return; }
+  $('hres').innerHTML = '<p class="mut">Memuat…</p>';
+  google.script.run.withSuccessHandler(r => {
+    RH = r; RF = {st:'', v:'', t:'', q:'', n:40};
+    $('hp').innerHTML = r.periods.map(x => '<option' + (x === r.p ? ' selected' : '') + '>' + esc(x) + '</option>').join('');
+    frameRiw();
+  }).withFailureHandler(e => $('hres').innerHTML = '<p class="mut">' + esc(e.message) + '</p>').getRiwayatImpl(p || '', b);
+}
+function frameRiw() {
+  if (!RH.p) { $('hres').innerHTML = '<p class="mut">Belum ada data periode info posting</p>'; return; }
+  const tipes = Array.from(new Set(RH.stores.map(s => s.tipe))).sort();
+  $('hres').innerHTML = '<div class="dx-card" id="rsum"></div>'
+    + '<div class="dx-chips"><button data-s="" class="on">Semua</button><button data-s="ok">✓ Sudah kirim</button><button data-s="no">✕ Belum kirim</button></div>'
+    + '<div class="dx-f"><select id="rv"><option value="">Semua variant rak</option><option value="REGULER">Rak Reguler</option><option value="NON REGULER">Rak Non Reguler</option></select>'
+    + '<select id="rt"><option value="">Semua tipe toko</option>' + tipes.map(x => '<option>' + esc(x) + '</option>').join('') + '</select>'
+    + '<input id="rq" class="w" placeholder="🔍 Cari kode / nama toko…"></div><div id="rlist"></div>';
+  $('hres').querySelectorAll('.dx-chips button').forEach(b => b.onclick = () => { RF.st = b.dataset.s; RF.n = 40;
+    $('hres').querySelectorAll('.dx-chips button').forEach(x => x.classList.toggle('on', x === b)); drawRiw(); });
+  $('rv').onchange = e => { RF.v = e.target.value; RF.n = 40; drawRiw(); };
+  $('rt').onchange = e => { RF.t = e.target.value; RF.n = 40; drawRiw(); };
+  $('rq').oninput = e => { RF.q = e.target.value.trim().toLowerCase(); RF.n = 40; drawRiw(); };
+  drawRiw();
+}
+function drawRiw() {
+  const all = RH.stores.map(s => ({s: s, f: RF.v ? s.files.filter(x => x.variant === RF.v) : s.files}))
+    .filter(o => (!RF.t || o.s.tipe === RF.t) && (!RF.q || (o.s.kode + ' ' + o.s.nama).toLowerCase().includes(RF.q)));
+  const sd = all.filter(o => o.f.length).length, tot = all.length, pct = tot ? Math.round(sd * 1000 / tot) / 10 : 0;
+  $('rsum').innerHTML = '<div class="dx-sum"><div class="big">' + pct + '%</div><div><b>' + sd + ' dari ' + tot + ' toko</b> sudah mengirim foto<br><small>Branch ' + esc(RH.branch) + ' • periode ' + esc(RH.p) + (RF.v ? ' • ' + esc(RF.v) : '') + '</small></div></div><div class="dx-bar"><i style="width:' + pct + '%"></i></div>';
+  const shown = all.filter(o => !RF.st || (RF.st === 'ok' ? o.f.length : !o.f.length));
+  const card = o => {
+    const ok = o.f.length > 0, rg = [], nr = [];
+    o.f.forEach(f => f.raks.forEach(x => { const a = f.variant === 'NON REGULER' ? nr : rg; if (a.indexOf(x) < 0) a.push(x); }));
+    return '<div class="st ' + (ok ? 'ok' : 'no') + '"><div class="h"><div><b>' + esc(o.s.kode) + ' - ' + esc(o.s.nama) + '</b><small>' + esc(o.s.tipe) + '</small></div><span class="bd">' + (ok ? '✓ Terkirim' : '✕ Belum kirim') + '</span></div>'
+      + (ok ? '<div class="ln">' + (rg.length ? '<div><span class="k">Reguler:</span>' + rg.map(x => '<span class="rc2 rg">' + esc(x) + '</span>').join('') + '</div>' : '')
+        + (nr.length ? '<div><span class="k">Non Reguler:</span>' + nr.map(x => '<span class="rc2 nr">' + esc(x) + '</span>').join('') + '</div>' : '')
+        + '<div style="margin-top:4px;color:#5b6b7d">' + o.f.length + ' foto • terakhir kirim ' + esc(fmtT(o.f[0].waktu)) + '</div></div>'
+        : '<div class="ln" style="color:#8E2A2A">Belum ada foto implementasi yang terkirim untuk periode ini.</div>') + '</div>';
+  };
+  $('rlist').innerHTML = shown.length ? '<p class="mut" style="text-align:left;margin:8px 0 0"><small>Menampilkan ' + Math.min(RF.n, shown.length) + ' dari ' + shown.length + ' toko</small></p>' + shown.slice(0, RF.n).map(card).join('')
+    + (shown.length > RF.n ? '<button type="button" class="btn s" id="rmore" style="width:100%">Tampilkan ' + Math.min(40, shown.length - RF.n) + ' lagi</button>' : '') : '<p class="mut">Tidak ada toko yang cocok dengan filter</p>';
+  if ($('rmore')) $('rmore').onclick = () => { RF.n += 40; drawRiw(); };
+}
+
+// ================= DASHBOARD PENCAPAIAN BRANCH =================
+let DD = null, DBR = '', DN = 30, DQ = '';
 function loadDash(p) {
   $('dres').innerHTML = '<p class="mut">Memuat…</p>';
   google.script.run.withSuccessHandler(r => {
     DD = r; $('dp').innerHTML = r.periods.map(x => '<option' + (x === r.p ? ' selected' : '') + '>' + esc(x) + '</option>').join('');
-    if (!r.branches.some(b => b.nama === DBR)) DBR = r.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto)[0] ? r.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto)[0].nama : '';
+    if (!DBR || !r.branches.some(b => b.nama === DBR)) DBR = M.branches.includes($('branch').value.trim()) ? $('branch').value.trim() : '';
     drawDash();
   }).withFailureHandler(e => $('dres').innerHTML = '<p class="mut">' + esc(e.message) + '</p>').getDashImpl(p || '');
 }
@@ -77,82 +275,42 @@ function drawDash() {
   const B = r.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto), n = B.length;
   const sum = k => B.reduce((a, b) => a + b[k], 0), tt = sum('total'), tu = sum('toko'), pt = tt ? Math.round(tu * 1000 / tt) / 10 : 0;
   const act = B.filter(b => b.toko > 0).length, C = 2 * Math.PI * 44, off = C * (1 - pt / 100);
-  const donut = '<svg viewBox="0 0 120 120" width="118" height="118"><circle cx="60" cy="60" r="44" fill="none" stroke="#F5C6C6" stroke-width="14"/><circle cx="60" cy="60" r="44" fill="none" stroke="#4CAF73" stroke-width="14" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 60 60)"/><text x="60" y="60" text-anchor="middle" font-size="25" font-weight="800" fill="#12355b">' + pt + '%</text><text x="60" y="78" text-anchor="middle" font-size="11" fill="#6b7c93">toko ada foto</text></svg>';
-  $('dres').innerHTML = '<div class="dx-t"><b>📊 Ringkasan Nasional</b><small>Periode ' + esc(r.p) + '</small></div>'
-    + '<div class="dx-card"><div class="dx-hero">' + donut + '<div class="lg"><div class="li"><i style="background:#4CAF73"></i>Toko sudah ada foto<b>' + tu + '</b></div><div class="li"><i style="background:#F5C6C6"></i>Toko belum ada foto<b>' + (tt - tu) + '</b></div><div class="li" style="font-size:12.5px;color:#6b7c93">dari ' + tt + ' toko di ' + n + ' branch</div></div></div></div>'
-    + '<div class="dx-k"><div><b>' + act + '/' + n + '</b><small>branch sudah mulai upload</small></div><div><b>' + sum('foto') + '</b><small>foto implementasi masuk</small></div><div><b>' + sum('rak') + '</b><small>no rak terkirim</small></div><div><b>' + (n - act) + '</b><small>branch belum upload sama sekali</small></div></div>'
-    + '<div class="dx-t"><b>🗺️ Status Tiap Branch</b><small>ketuk untuk detail toko</small></div>'
-    + '<div class="lg2">🟢 Hijau = sudah ada toko yang upload foto &nbsp;•&nbsp; 🔴 Merah = belum ada foto sama sekali. Persen = toko yang sudah ada foto implementasinya.</div>'
-    + '<div class="tl-g">' + B.map(b => '<div class="tl ' + (b.toko ? 'ok' : 'no') + (b.nama === DBR ? ' sel' : '') + '" data-b="' + esc(b.nama) + '"><b>' + esc(b.nama) + '</b><div class="pp">' + b.pct + '%</div><small>' + b.toko + ' dari ' + b.total + ' toko • ' + b.foto + ' foto</small><div class="bar"><i style="width:' + (b.toko ? Math.max(3, b.pct) : 0) + '%"></i></div></div>').join('') + '</div>'
-    + '<div id="ddet"></div>';
-  drawDet(B);
+  const donut = '<svg viewBox="0 0 120 120" width="118" height="118"><circle cx="60" cy="60" r="44" fill="none" stroke="#F5C6C6" stroke-width="14"/><circle cx="60" cy="60" r="44" fill="none" stroke="#4CAF73" stroke-width="14" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 60 60)"/><text x="60" y="60" text-anchor="middle" font-size="25" font-weight="800" fill="#12355b">' + pt + '%</text><text x="60" y="78" text-anchor="middle" font-size="11" fill="#6b7c93">toko upload</text></svg>';
+  let h = '<div class="dx-t"><b>📊 Pencapaian Implementasi</b><small>Periode ' + esc(r.p) + '</small></div>'
+    + '<div class="dx-card"><div class="dx-hero">' + donut + '<div class="lg"><div class="li"><i style="background:#4CAF73"></i>Toko sudah upload<b>' + tu + '</b></div><div class="li"><i style="background:#F5C6C6"></i>Toko belum upload<b>' + (tt - tu) + '</b></div><div class="li" style="font-size:12.5px;color:#6b7c93">dari ' + tt + ' toko di ' + n + ' branch</div></div></div></div>'
+    + '<div class="dx-k"><div><b>' + sum('foto') + '</b><small>foto implementasi masuk</small></div><div><b>' + sum('rak') + '</b><small>no rak terkirim</small></div><div><b>' + act + '/' + n + '</b><small>branch sudah mulai upload</small></div><div><b>' + (B[0] ? esc(B[0].nama) : '-') + '</b><small>peringkat 1 saat ini</small></div></div>'
+    + '<div class="lg2">🟢 Hijau = sudah ada toko upload &nbsp;•&nbsp; 🔴 Merah = belum ada yang upload. Bar & persen = toko yang sudah upload di branch itu. <b>Ketuk branch untuk melihat detail.</b></div>'
+    + '<div class="dx-t"><b>🏆 Peringkat Branch</b><small>diurutkan dari pencapaian tertinggi</small></div>'
+    + B.map((b, i) => '<div class="rk ' + (b.toko ? 'ok' : 'no') + (b.nama === DBR ? ' sel' : '') + '" data-b="' + esc(b.nama) + '"><div class="n">' + (i < 3 && b.toko ? ['🥇', '🥈', '🥉'][i] : i + 1) + '</div><div class="m"><b>' + esc(b.nama) + '</b><small>' + b.toko + ' dari ' + b.total + ' toko • ' + b.foto + ' foto</small><div class="bar"><i style="width:' + (b.toko ? Math.max(3, b.pct) : 0) + '%"></i></div></div><div class="p">' + b.pct + '%</div></div>').join('');
+  const d = B.find(b => b.nama === DBR);
+  if (d) {
+    const rank = B.indexOf(d) + 1, mx = Math.max(1, ...d.days.map(x => x.foto)), q = DQ.toLowerCase();
+    const bl = d.belum.filter(s => !q || (s.kode + ' ' + s.nama).toLowerCase().includes(q));
+    h += '<div id="ddet" class="dx-t"><b>🔎 Detail ' + esc(d.nama) + '</b><small>peringkat ' + rank + ' dari ' + n + '</small></div>'
+      + '<div class="dx-k"><div><b>' + d.toko + '/' + d.total + '</b><small>toko sudah upload (' + d.pct + '%)</small></div><div><b>' + d.foto + '</b><small>foto terkirim</small></div><div><b>' + d.rak + '</b><small>no rak terkirim</small></div><div><b style="font-size:17px">' + (d.last ? esc(fmtT(d.last)) : '-') + '</b><small>upload terakhir</small></div></div>'
+      + '<div class="dx-card"><b style="color:#12355b">Pencapaian per Tipe Toko</b>' + d.tipes.map(t => { const p = t.total ? Math.round(t.toko * 1000 / t.total) / 10 : 0; return '<div class="tp"><div class="r"><span>' + esc(t.tipe) + '</span><b>' + t.toko + '/' + t.total + ' • ' + p + '%</b></div><div class="dx-bar"><i style="width:' + (t.toko ? Math.max(3, p) : 0) + '%"></i></div></div>'; }).join('') + '</div>'
+      + '<div class="dx-card"><b style="color:#12355b">Aktivitas Upload Harian</b><small style="display:block;color:#6b7c93">jumlah foto per hari</small>' + (d.days.length ? '<div class="dy">' + d.days.slice(-14).map(x => '<div><b>' + x.foto + '</b><i style="height:' + Math.round(x.foto * 70 / mx) + 'px"></i><small>' + x.d.slice(8, 10) + '/' + x.d.slice(5, 7) + '</small></div>').join('') + '</div>' : '<p class="mut">Belum ada upload</p>') + '</div>'
+      + '<div class="dx-t"><b>✕ Toko Belum Upload</b><small>' + d.belum.length + ' toko</small></div>'
+      + '<input id="dq" placeholder="🔍 Cari kode / nama toko…" value="' + esc(DQ) + '" style="width:100%;box-sizing:border-box">'
+      + (bl.length ? bl.slice(0, DN).map(s => '<div class="bl"><span><b>' + esc(s.kode) + '</b> - ' + esc(s.nama) + '</span><small>' + esc(s.tipe) + '</small></div>').join('') + (bl.length > DN ? '<button type="button" class="btn s" id="dmore" style="width:100%">Tampilkan ' + Math.min(30, bl.length - DN) + ' lagi</button>' : '') : '<p class="mut">' + (d.belum.length ? 'Tidak ada toko yang cocok' : 'Semua toko sudah upload 🎉') + '</p>');
+  } else h += '<p class="mut">Ketuk salah satu branch di atas untuk melihat detail toko yang belum upload.</p>';
+  const keep = document.activeElement && document.activeElement.id === 'dq';
+  $('dres').innerHTML = h;
+  if ($('dmore')) $('dmore').onclick = () => { DN += 30; drawDash(); };
+  if ($('dq')) { $('dq').oninput = e => { DQ = e.target.value.trim(); DN = 30; drawDash(); }; if (keep) { const q = $('dq'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
 }
-function drawDet(B) {
-  B = B || DD.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto);
-  const d = B.find(b => b.nama === DBR); if (!d) { $('ddet').innerHTML = ''; return; }
-  const rank = B.indexOf(d) + 1, mx = Math.max(1, ...d.days.map(x => x.foto)), tipes = Array.from(new Set(d.tipes.map(t => t.tipe)));
-  DF = {st: '', t: '', q: '', n: 30};
-  $('ddet').innerHTML = '<div class="dx-t"><b>🔎 Detail ' + esc(d.nama) + '</b><small>peringkat ' + rank + ' dari ' + B.length + '</small></div>'
-    + '<div class="dx-k"><div><b>' + d.toko + '/' + d.total + '</b><small>toko ada foto (' + d.pct + '%)</small></div><div><b>' + d.foto + '</b><small>foto terkirim</small></div><div><b>' + d.rak + '</b><small>no rak terkirim</small></div><div><b style="font-size:17px">' + (d.last ? esc(fmtT(d.last)) : '-') + '</b><small>upload terakhir</small></div></div>'
-    + '<div class="dx-card"><b style="color:#12355b">Pencapaian per Tipe Toko</b>' + d.tipes.map(t => { const p = t.total ? Math.round(t.toko * 1000 / t.total) / 10 : 0; return '<div class="tp"><div class="r"><span>' + esc(t.tipe) + '</span><b>' + t.toko + '/' + t.total + ' • ' + p + '%</b></div><div class="dx-bar"><i style="width:' + (t.toko ? Math.max(3, p) : 0) + '%"></i></div></div>'; }).join('') + '</div>'
-    + '<div class="dx-card"><b style="color:#12355b">Aktivitas Upload Harian</b><small style="display:block;color:#6b7c93">jumlah foto per hari</small>' + (d.days.length ? '<div class="dy">' + d.days.slice(-14).map(x => '<div><b>' + x.foto + '</b><i style="height:' + Math.round(x.foto * 70 / mx) + 'px"></i><small>' + x.d.slice(8, 10) + '/' + x.d.slice(5, 7) + '</small></div>').join('') + '</div>' : '<p class="mut">Belum ada upload</p>') + '</div>'
-    + '<div class="dx-t"><b>🏬 Daftar Toko</b><small id="dcnt"></small></div>'
-    + '<div class="dx-chips"><button data-s="" class="on">Semua (' + d.total + ')</button><button data-s="ok">✓ Ada foto (' + d.toko + ')</button><button data-s="no">✕ Belum (' + d.belum.length + ')</button></div>'
-    + '<div class="dx-f"><select id="dtp"><option value="">Semua tipe toko</option>' + tipes.map(x => '<option>' + esc(x) + '</option>').join('') + '</select><input id="dq" placeholder="🔍 Cari kode / nama toko…"></div><div id="dlist"></div>';
-  $('ddet').querySelectorAll('.dx-chips button').forEach(b => b.onclick = () => { DF.st = b.dataset.s; DF.n = 30; $('ddet').querySelectorAll('.dx-chips button').forEach(x => x.classList.toggle('on', x === b)); drawList(d); });
-  $('dtp').onchange = e => { DF.t = e.target.value; DF.n = 30; drawList(d); };
-  $('dq').oninput = e => { DF.q = e.target.value.trim().toLowerCase(); DF.n = 30; drawList(d); };
-  drawList(d);
-}
-function drawList(d) {
-  const all = d.sudah.map(s => Object.assign({ok: 1}, s)).concat(d.belum.map(s => Object.assign({ok: 0}, s))).sort((a, b) => a.kode < b.kode ? -1 : 1)
-    .filter(s => (!DF.st || (DF.st === 'ok') === !!s.ok) && (!DF.t || s.tipe === DF.t) && (!DF.q || (s.kode + ' ' + s.nama).toLowerCase().includes(DF.q)));
-  $('dcnt').textContent = all.length + ' toko';
-  $('dlist').innerHTML = all.length ? all.slice(0, DF.n).map(s => '<div class="st ' + (s.ok ? 'ok' : 'no') + '"><div class="h"><div><b>' + esc(s.kode) + ' - ' + esc(s.nama) + '</b><small>' + esc(s.tipe) + '</small></div><span class="bd">' + (s.ok ? '✓ Ada foto' : '✕ Belum ada') + '</span></div>'
-    + (s.ok ? '<div class="ft"><span class="ln" style="margin:0">' + s.foto + ' foto • ' + s.rak + ' rak • terakhir ' + esc(fmtT(s.last)) + '</span><button data-k="' + esc(s.kode) + '" data-n="' + esc(s.nama) + '">🔎 Lihat foto</button></div>' : '<div class="ln" style="color:#8E2A2A">Belum ada foto implementasi dari toko ini.</div>') + '</div>').join('')
-    + (all.length > DF.n ? '<button type="button" class="btn s" id="dmore" style="width:100%">Tampilkan ' + Math.min(30, all.length - DF.n) + ' lagi</button>' : '') : '<p class="mut">Tidak ada toko yang cocok</p>';
-  if ($('dmore')) $('dmore').onclick = () => { DF.n += 30; drawList(d); };
-}
-$('dres').onclick = e => {
-  const t = e.target.closest('.tl[data-b]'); if (t) { DBR = t.dataset.b; document.querySelectorAll('.tl').forEach(x => x.classList.toggle('sel', x === t)); drawDet(); const el = $('ddet'); if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'}); return; }
-  const b = e.target.closest('button[data-k]'); if (b) goStore(b.dataset.k, b.dataset.n);
-};
+$('dres').onclick = e => { const c = e.target.closest('.rk[data-b]'); if (!c) return; DBR = c.dataset.b; DN = 30; DQ = ''; drawDash(); const t = $('ddet'); if (t) t.scrollIntoView({behavior: 'smooth', block: 'start'}); };
+$('hp').onchange = () => loadRiw($('hp').value);
 $('dp').onchange = () => loadDash($('dp').value);
-
-// ================= LIHAT FOTO =================
-function loadStores(b, keep) {
-  $('kt').placeholder = 'Memuat toko…';
-  google.script.run.withSuccessHandler(st => { const c = keep ? $('kt').value : ''; if (!keep) S = {};
-    st.forEach(s => { const k = s.kode + ' - ' + s.nama; S[k] = s; $('kt')._sub[k] = s.tipe; }); Combo($('kt'), Object.keys(S)); $('kt').value = c; $('kt').placeholder = 'Semua toko (atau cari kode / nama)'; }).getStores(b);
+function initPanels() {
+  Combo($('hbr'), M.branches || []); $('hbr')._title = 'Branch'; $('hbr').onchange = () => loadRiw('');
 }
-function runFind() {
-  try {
-    if (!$('tgl').value) throw 'Tanggal info posting belum dipilih';
-    const br = need($('br'), M.branches, 'Branch'), s = S[$('kt').value]; if ($('kt').value && !s) throw 'Kode toko tidak valid';
-    const f = {periode: $('tgl').value, branch: br, kode: s ? s.kode : '', rak: $('rk').value.trim()}; stg.hidden = true; $('list').innerHTML = '<p class="mut">Memuat…</p>';
-    google.script.run.withSuccessHandler(r => { ITEMS = r;
-      $('list').innerHTML = r.length ? '<p class="mut">' + r.length + ' foto ditemukan</p>' + r.map((x, i) => '<div class="card item"><span>' + (s ? '' : esc(x.toko) + '<br>') + 'Rak <b>' + esc(x.rak) + '</b>' + (x.mode === 'NON REGULER' ? ' <small>(NON REGULER)</small>' : '') + '<br><small>diupload ' + esc(x.waktu) + '</small></span><button data-i="' + i + '">Lihat</button></div>').join('') : '<p class="mut">Foto implementasi belum ada untuk pilihan ini</p>';
-    }).withFailureHandler(e => { $('list').innerHTML = ''; toast(e.message, 0); }).findFilesImpl(f);
-  } catch (e) { toast(e, 0); }
-}
-function goStore(kode, nama) {
-  if (!M.branches.length) { setTimeout(() => goStore(kode, nama), 400); return; }
-  document.querySelector('.tabs button[data-t="f"]').click();
-  S = {}; const lb = kode + ' - ' + nama; S[lb] = {kode: kode, nama: nama};
-  $('tgl').value = DD.p; $('br').value = DBR; $('rk').value = ''; $('kt')._arr = [lb]; $('kt').value = lb; loadStores(DBR, true); runFind();
-}
-function show(x) { cur = x; toast('Memuat gambar…', 1);
-  google.script.run.withSuccessHandler(r => { const bin = atob(r.data), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); BLOB = new Blob([u], {type: r.mime});
-    $('im').src = URL.createObjectURL(BLOB); $('cap').textContent = x.toko + ' • Rak ' + x.rak; stg.hidden = false; stg.scrollIntoView(); }).withFailureHandler(e => toast(e.message, 0)).getImageImpl(x.id); }
-$('list').onclick = e => { const b = e.target.closest('button[data-i]'); if (b) show(ITEMS[+b.dataset.i]); };
-$('dl').onclick = () => { if (!BLOB) return; const a = document.createElement('a'); a.href = URL.createObjectURL(BLOB); a.download = 'implementasi_' + cur.toko.split(' - ')[0] + '_rak_' + cur.rak.replace(/[^\w.-]+/g, '_') + '.jpg'; a.click(); };
-$('go').onclick = runFind;
-google.script.run.withSuccessHandler(m => {
-  M = m; Combo($('br'), m.branches); Combo($('kt'), []); $('kt')._sub = {};
-  const G = Seq([{el: $('tgl'), label: 'Tanggal Info Posting'}, {el: $('br'), label: 'Branch'}]);
-  $('kt')._guard = G; $('kt')._opt = 'Semua toko';
-  $('br').onchange = () => { S = {}; $('kt')._arr = []; $('kt')._sub = {}; $('kt').value = ''; if (!M.branches.includes($('br').value)) return; loadStores($('br').value, false); };
-}).getMasters();
-loadDash('');
-Tabs();
-</script></body></html>
+Tabs(t => {
+  const go = () => { if (!M || !M.branches.length) { setTimeout(go, 400); return; }
+    if (t === 'h') { if (!$('hbr').value && M.branches.includes($('branch').value.trim())) $('hbr').value = $('branch').value.trim(); loadRiw($('hp').value); }
+    if (t === 'd') loadDash($('dp').value); };
+  if (t === 'h' || t === 'd') go();
+});
+</script>
+</body>
+</html>
