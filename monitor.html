@@ -1,0 +1,158 @@
+<!DOCTYPE html><html><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitoring Foto Implementasi</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    /* ===== Riwayat & Dashboard ===== */
+    .dx-card{background:#fff;border:1px solid #dbe4f0;border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 1px 4px rgba(15,40,80,.07)}
+    .dx-t{display:flex;justify-content:space-between;align-items:baseline;margin:16px 0 6px}.dx-t b{font-size:16px;color:#12355b}.dx-t small{color:#6b7c93;font-size:12.5px}
+    .dx-sum{display:flex;gap:14px;align-items:center}.dx-sum .big{font-size:30px;font-weight:800;color:#12355b;line-height:1}.dx-sum small{color:#5b6b7d;font-size:13px}
+    .dx-bar{height:9px;border-radius:9px;background:#F5C6C6;margin-top:8px;overflow:hidden}.dx-bar i{display:block;height:100%;background:#4CAF73;border-radius:9px}
+    .dx-chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}.dx-chips button{flex:1;min-width:84px;border:1px solid #cfd9e6;background:#fff;border-radius:20px;padding:8px 8px;font-size:13px;font-weight:700;color:#33465c;cursor:pointer}
+    .dx-chips button.on{background:#12355b;border-color:#12355b;color:#fff}
+    .dx-f{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.dx-f select,.dx-f input{width:100%;box-sizing:border-box}.dx-f .w{grid-column:1/3}
+    .st{border-radius:14px;padding:11px 12px;margin:8px 0;border:1px solid;border-left-width:6px}
+    .st.ok{background:#E8F5EC;border-color:#BFE3CA;border-left-color:#4CAF73}.st.no{background:#FDEDED;border-color:#F5C6C6;border-left-color:#E57373}
+    .st .h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.st .h b{font-size:14.5px;color:#1d2b3a}.st .h small{display:block;color:#5b6b7d;font-size:12px;margin-top:2px}
+    .st .bd{font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap}.st.ok .bd{background:#CBEAD4;color:#1B5E32}.st.no .bd{background:#F9D3D3;color:#8E2A2A}
+    .st .ln{font-size:12.5px;color:#33465c;margin-top:8px}.st .ln span.k{display:inline-block;font-weight:800;margin-right:4px}
+    .rc2{display:inline-block;border-radius:8px;padding:2px 8px;margin:2px 3px 2px 0;font-size:12px;font-weight:800}.rc2.rg{background:#DCE8FF;color:#1E4FA8}.rc2.nr{background:#FFE9C7;color:#8A5200}
+    .dx-hero{display:flex;gap:14px;align-items:center}.dx-hero .lg{flex:1;display:grid;gap:8px}.dx-hero .li{display:flex;align-items:center;gap:8px;font-size:14px;color:#33465c}
+    .dx-hero .li i{width:12px;height:12px;border-radius:4px;flex:none}.dx-hero .li b{margin-left:auto;font-size:18px;color:#12355b}
+    .dx-k{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.dx-k div{background:#fff;border:1px solid #dbe4f0;border-radius:14px;padding:12px;box-shadow:0 1px 4px rgba(15,40,80,.06)}
+    .dx-k b{display:block;font-size:23px;color:#12355b;line-height:1.1}.dx-k small{color:#6b7c93;font-size:12.5px}
+    .rk{display:flex;gap:10px;align-items:center;border-radius:14px;padding:10px 12px;margin:7px 0;border:1px solid;border-left-width:6px;cursor:pointer}
+    .rk.ok{background:#E8F5EC;border-color:#BFE3CA;border-left-color:#4CAF73}.rk.no{background:#FDEDED;border-color:#F5C6C6;border-left-color:#E57373}.rk.sel{box-shadow:0 0 0 2px #12355b}
+    .rk .n{width:30px;height:30px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;color:#12355b;font-size:14px;flex:none}
+    .rk .m{flex:1;min-width:0}.rk .m b{font-size:14.5px;color:#1d2b3a}.rk .m small{display:block;color:#5b6b7d;font-size:12px}
+    .rk .bar{height:7px;border-radius:7px;background:rgba(0,0,0,.08);margin-top:6px;overflow:hidden}.rk .bar i{display:block;height:100%;background:#4CAF73}
+    .rk .p{font-size:19px;font-weight:800;text-align:right}.rk.ok .p{color:#1B5E32}.rk.no .p{color:#8E2A2A}
+    .tp{margin:9px 0}.tp .r{display:flex;justify-content:space-between;font-size:13px;color:#33465c}.tp .r b{color:#12355b}
+    .dy{display:flex;align-items:flex-end;gap:6px;height:110px;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+    .dy div{flex:1 0 34px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+    .dy i{display:block;width:100%;background:#7FC79A;border-radius:6px 6px 0 0;min-height:3px}.dy b{font-size:11.5px;color:#12355b}.dy small{font-size:10.5px;color:#6b7c93}
+    .lg2{font-size:12.5px;color:#5b6b7d;background:#f4f7fb;border-radius:10px;padding:8px 10px;margin:6px 0}
+    .bl{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:#FDEDED;border:1px solid #F5C6C6;margin:6px 0;font-size:13px}.bl small{color:#8E2A2A;font-size:11.5px;white-space:nowrap}
+    .tl-g{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0}
+    .tl{border-radius:14px;padding:10px 12px;border:1px solid;border-left-width:6px;cursor:pointer}
+    .tl.ok{background:#E8F5EC;border-color:#BFE3CA;border-left-color:#4CAF73}.tl.no{background:#FDEDED;border-color:#F5C6C6;border-left-color:#E57373}.tl.sel{box-shadow:0 0 0 2px #12355b}
+    .tl b{font-size:14px;color:#1d2b3a;display:block}.tl .pp{font-size:24px;font-weight:800;line-height:1.15}.tl.ok .pp{color:#1B5E32}.tl.no .pp{color:#8E2A2A}
+    .tl small{color:#5b6b7d;font-size:11.5px;display:block}.tl .bar{height:6px;border-radius:6px;background:rgba(0,0,0,.08);margin-top:6px;overflow:hidden}.tl .bar i{display:block;height:100%;background:#4CAF73}
+    .st .ft{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+</style></head><body>
+<header><h1>🔎 Monitoring Foto Implementasi</h1><p>Dashboard upload implementasi dari branch & toko</p></header>
+<div class="tabs"><button class="on" data-t="d">📊 Dashboard</button><button data-t="f">🔎 Lihat Foto</button></div>
+<main>
+<section id="d" class="tab"><label class="l">Periode Info Posting</label><select id="dp"></select><div id="dres"><p class="mut">Memuat…</p></div></section>
+<section id="f" class="tab" hidden>
+<label class="l">Tanggal Info Posting</label><div><input id="tgl" placeholder="Pilih tanggal (hanya hari Senin)"></div>
+<p class="warn">⚠️ Tanggal harus sesuai dengan info posting.</p>
+<label class="l">Branch</label><input id="br" placeholder="Cari branch…">
+<label class="l">Kode Toko (kosongkan = semua toko)</label><input id="kt" placeholder="Pilih branch dulu…">
+<label class="l">No Rak (kosongkan = semua rak)</label><input id="rk" placeholder="Ketik no rak, contoh: AA1" autocomplete="off">
+<button class="btn" id="go">Tampilkan</button>
+<div id="list"></div>
+<div id="stg" hidden><p id="cap" style="font-weight:600"></p><img id="im" class="pv" style="max-height:none"><button class="btn" id="dl">⬇️ Download</button></div>
+</section>
+</main>
+<div id="toast"></div><div id="ov"><div><h2>✅ Berhasil</h2><p id="ovm"></p><button class="btn" onclick="$('ov').style.display='none'">OK</button></div></div>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="lib.js"></script>
+<script>
+let M = {branches: []}, S = {}, ITEMS = [], cur = null, BLOB = null, DD = null, DBR = '', DF = {st: '', t: '', q: '', n: 30};
+const stg = $('stg'); Cal($('tgl'));
+const fmtT = w => w ? w.slice(8, 10) + '/' + w.slice(5, 7) + ' ' + w.slice(11, 16) : '-';
+
+// ================= DASHBOARD =================
+function loadDash(p) {
+  $('dres').innerHTML = '<p class="mut">Memuat…</p>';
+  google.script.run.withSuccessHandler(r => {
+    DD = r; $('dp').innerHTML = r.periods.map(x => '<option' + (x === r.p ? ' selected' : '') + '>' + esc(x) + '</option>').join('');
+    if (!r.branches.some(b => b.nama === DBR)) DBR = r.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto)[0] ? r.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto)[0].nama : '';
+    drawDash();
+  }).withFailureHandler(e => $('dres').innerHTML = '<p class="mut">' + esc(e.message) + '</p>').getDashImpl(p || '');
+}
+function drawDash() {
+  const r = DD; if (!r.p) { $('dres').innerHTML = '<p class="mut">Belum ada data periode info posting</p>'; return; }
+  const B = r.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto), n = B.length;
+  const sum = k => B.reduce((a, b) => a + b[k], 0), tt = sum('total'), tu = sum('toko'), pt = tt ? Math.round(tu * 1000 / tt) / 10 : 0;
+  const act = B.filter(b => b.toko > 0).length, C = 2 * Math.PI * 44, off = C * (1 - pt / 100);
+  const donut = '<svg viewBox="0 0 120 120" width="118" height="118"><circle cx="60" cy="60" r="44" fill="none" stroke="#F5C6C6" stroke-width="14"/><circle cx="60" cy="60" r="44" fill="none" stroke="#4CAF73" stroke-width="14" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 60 60)"/><text x="60" y="60" text-anchor="middle" font-size="25" font-weight="800" fill="#12355b">' + pt + '%</text><text x="60" y="78" text-anchor="middle" font-size="11" fill="#6b7c93">toko ada foto</text></svg>';
+  $('dres').innerHTML = '<div class="dx-t"><b>📊 Ringkasan Nasional</b><small>Periode ' + esc(r.p) + '</small></div>'
+    + '<div class="dx-card"><div class="dx-hero">' + donut + '<div class="lg"><div class="li"><i style="background:#4CAF73"></i>Toko sudah ada foto<b>' + tu + '</b></div><div class="li"><i style="background:#F5C6C6"></i>Toko belum ada foto<b>' + (tt - tu) + '</b></div><div class="li" style="font-size:12.5px;color:#6b7c93">dari ' + tt + ' toko di ' + n + ' branch</div></div></div></div>'
+    + '<div class="dx-k"><div><b>' + act + '/' + n + '</b><small>branch sudah mulai upload</small></div><div><b>' + sum('foto') + '</b><small>foto implementasi masuk</small></div><div><b>' + sum('rak') + '</b><small>no rak terkirim</small></div><div><b>' + (n - act) + '</b><small>branch belum upload sama sekali</small></div></div>'
+    + '<div class="dx-t"><b>🗺️ Status Tiap Branch</b><small>ketuk untuk detail toko</small></div>'
+    + '<div class="lg2">🟢 Hijau = sudah ada toko yang upload foto &nbsp;•&nbsp; 🔴 Merah = belum ada foto sama sekali. Persen = toko yang sudah ada foto implementasinya.</div>'
+    + '<div class="tl-g">' + B.map(b => '<div class="tl ' + (b.toko ? 'ok' : 'no') + (b.nama === DBR ? ' sel' : '') + '" data-b="' + esc(b.nama) + '"><b>' + esc(b.nama) + '</b><div class="pp">' + b.pct + '%</div><small>' + b.toko + ' dari ' + b.total + ' toko • ' + b.foto + ' foto</small><div class="bar"><i style="width:' + (b.toko ? Math.max(3, b.pct) : 0) + '%"></i></div></div>').join('') + '</div>'
+    + '<div id="ddet"></div>';
+  drawDet(B);
+}
+function drawDet(B) {
+  B = B || DD.branches.slice().sort((a, b) => b.pct - a.pct || b.foto - a.foto);
+  const d = B.find(b => b.nama === DBR); if (!d) { $('ddet').innerHTML = ''; return; }
+  const rank = B.indexOf(d) + 1, mx = Math.max(1, ...d.days.map(x => x.foto)), tipes = Array.from(new Set(d.tipes.map(t => t.tipe)));
+  DF = {st: '', t: '', q: '', n: 30};
+  $('ddet').innerHTML = '<div class="dx-t"><b>🔎 Detail ' + esc(d.nama) + '</b><small>peringkat ' + rank + ' dari ' + B.length + '</small></div>'
+    + '<div class="dx-k"><div><b>' + d.toko + '/' + d.total + '</b><small>toko ada foto (' + d.pct + '%)</small></div><div><b>' + d.foto + '</b><small>foto terkirim</small></div><div><b>' + d.rak + '</b><small>no rak terkirim</small></div><div><b style="font-size:17px">' + (d.last ? esc(fmtT(d.last)) : '-') + '</b><small>upload terakhir</small></div></div>'
+    + '<div class="dx-card"><b style="color:#12355b">Pencapaian per Tipe Toko</b>' + d.tipes.map(t => { const p = t.total ? Math.round(t.toko * 1000 / t.total) / 10 : 0; return '<div class="tp"><div class="r"><span>' + esc(t.tipe) + '</span><b>' + t.toko + '/' + t.total + ' • ' + p + '%</b></div><div class="dx-bar"><i style="width:' + (t.toko ? Math.max(3, p) : 0) + '%"></i></div></div>'; }).join('') + '</div>'
+    + '<div class="dx-card"><b style="color:#12355b">Aktivitas Upload Harian</b><small style="display:block;color:#6b7c93">jumlah foto per hari</small>' + (d.days.length ? '<div class="dy">' + d.days.slice(-14).map(x => '<div><b>' + x.foto + '</b><i style="height:' + Math.round(x.foto * 70 / mx) + 'px"></i><small>' + x.d.slice(8, 10) + '/' + x.d.slice(5, 7) + '</small></div>').join('') + '</div>' : '<p class="mut">Belum ada upload</p>') + '</div>'
+    + '<div class="dx-t"><b>🏬 Daftar Toko</b><small id="dcnt"></small></div>'
+    + '<div class="dx-chips"><button data-s="" class="on">Semua (' + d.total + ')</button><button data-s="ok">✓ Ada foto (' + d.toko + ')</button><button data-s="no">✕ Belum (' + d.belum.length + ')</button></div>'
+    + '<div class="dx-f"><select id="dtp"><option value="">Semua tipe toko</option>' + tipes.map(x => '<option>' + esc(x) + '</option>').join('') + '</select><input id="dq" placeholder="🔍 Cari kode / nama toko…"></div><div id="dlist"></div>';
+  $('ddet').querySelectorAll('.dx-chips button').forEach(b => b.onclick = () => { DF.st = b.dataset.s; DF.n = 30; $('ddet').querySelectorAll('.dx-chips button').forEach(x => x.classList.toggle('on', x === b)); drawList(d); });
+  $('dtp').onchange = e => { DF.t = e.target.value; DF.n = 30; drawList(d); };
+  $('dq').oninput = e => { DF.q = e.target.value.trim().toLowerCase(); DF.n = 30; drawList(d); };
+  drawList(d);
+}
+function drawList(d) {
+  const all = d.sudah.map(s => Object.assign({ok: 1}, s)).concat(d.belum.map(s => Object.assign({ok: 0}, s))).sort((a, b) => a.kode < b.kode ? -1 : 1)
+    .filter(s => (!DF.st || (DF.st === 'ok') === !!s.ok) && (!DF.t || s.tipe === DF.t) && (!DF.q || (s.kode + ' ' + s.nama).toLowerCase().includes(DF.q)));
+  $('dcnt').textContent = all.length + ' toko';
+  $('dlist').innerHTML = all.length ? all.slice(0, DF.n).map(s => '<div class="st ' + (s.ok ? 'ok' : 'no') + '"><div class="h"><div><b>' + esc(s.kode) + ' - ' + esc(s.nama) + '</b><small>' + esc(s.tipe) + '</small></div><span class="bd">' + (s.ok ? '✓ Ada foto' : '✕ Belum ada') + '</span></div>'
+    + (s.ok ? '<div class="ft"><span class="ln" style="margin:0">' + s.foto + ' foto • ' + s.rak + ' rak • terakhir ' + esc(fmtT(s.last)) + '</span><button data-k="' + esc(s.kode) + '" data-n="' + esc(s.nama) + '">🔎 Lihat foto</button></div>' : '<div class="ln" style="color:#8E2A2A">Belum ada foto implementasi dari toko ini.</div>') + '</div>').join('')
+    + (all.length > DF.n ? '<button type="button" class="btn s" id="dmore" style="width:100%">Tampilkan ' + Math.min(30, all.length - DF.n) + ' lagi</button>' : '') : '<p class="mut">Tidak ada toko yang cocok</p>';
+  if ($('dmore')) $('dmore').onclick = () => { DF.n += 30; drawList(d); };
+}
+$('dres').onclick = e => {
+  const t = e.target.closest('.tl[data-b]'); if (t) { DBR = t.dataset.b; document.querySelectorAll('.tl').forEach(x => x.classList.toggle('sel', x === t)); drawDet(); const el = $('ddet'); if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'}); return; }
+  const b = e.target.closest('button[data-k]'); if (b) goStore(b.dataset.k, b.dataset.n);
+};
+$('dp').onchange = () => loadDash($('dp').value);
+
+// ================= LIHAT FOTO =================
+function loadStores(b, keep) {
+  $('kt').placeholder = 'Memuat toko…';
+  google.script.run.withSuccessHandler(st => { const c = keep ? $('kt').value : ''; if (!keep) S = {};
+    st.forEach(s => { const k = s.kode + ' - ' + s.nama; S[k] = s; $('kt')._sub[k] = s.tipe; }); Combo($('kt'), Object.keys(S)); $('kt').value = c; $('kt').placeholder = 'Semua toko (atau cari kode / nama)'; }).getStores(b);
+}
+function runFind() {
+  try {
+    if (!$('tgl').value) throw 'Tanggal info posting belum dipilih';
+    const br = need($('br'), M.branches, 'Branch'), s = S[$('kt').value]; if ($('kt').value && !s) throw 'Kode toko tidak valid';
+    const f = {periode: $('tgl').value, branch: br, kode: s ? s.kode : '', rak: $('rk').value.trim()}; stg.hidden = true; $('list').innerHTML = '<p class="mut">Memuat…</p>';
+    google.script.run.withSuccessHandler(r => { ITEMS = r;
+      $('list').innerHTML = r.length ? '<p class="mut">' + r.length + ' foto ditemukan</p>' + r.map((x, i) => '<div class="card item"><span>' + (s ? '' : esc(x.toko) + '<br>') + 'Rak <b>' + esc(x.rak) + '</b>' + (x.mode === 'NON REGULER' ? ' <small>(NON REGULER)</small>' : '') + '<br><small>diupload ' + esc(x.waktu) + '</small></span><button data-i="' + i + '">Lihat</button></div>').join('') : '<p class="mut">Foto implementasi belum ada untuk pilihan ini</p>';
+    }).withFailureHandler(e => { $('list').innerHTML = ''; toast(e.message, 0); }).findFilesImpl(f);
+  } catch (e) { toast(e, 0); }
+}
+function goStore(kode, nama) {
+  if (!M.branches.length) { setTimeout(() => goStore(kode, nama), 400); return; }
+  document.querySelector('.tabs button[data-t="f"]').click();
+  S = {}; const lb = kode + ' - ' + nama; S[lb] = {kode: kode, nama: nama};
+  $('tgl').value = DD.p; $('br').value = DBR; $('rk').value = ''; $('kt')._arr = [lb]; $('kt').value = lb; loadStores(DBR, true); runFind();
+}
+function show(x) { cur = x; toast('Memuat gambar…', 1);
+  google.script.run.withSuccessHandler(r => { const bin = atob(r.data), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); BLOB = new Blob([u], {type: r.mime});
+    $('im').src = URL.createObjectURL(BLOB); $('cap').textContent = x.toko + ' • Rak ' + x.rak; stg.hidden = false; stg.scrollIntoView(); }).withFailureHandler(e => toast(e.message, 0)).getImageImpl(x.id); }
+$('list').onclick = e => { const b = e.target.closest('button[data-i]'); if (b) show(ITEMS[+b.dataset.i]); };
+$('dl').onclick = () => { if (!BLOB) return; const a = document.createElement('a'); a.href = URL.createObjectURL(BLOB); a.download = 'implementasi_' + cur.toko.split(' - ')[0] + '_rak_' + cur.rak.replace(/[^\w.-]+/g, '_') + '.jpg'; a.click(); };
+$('go').onclick = runFind;
+google.script.run.withSuccessHandler(m => {
+  M = m; Combo($('br'), m.branches); Combo($('kt'), []); $('kt')._sub = {};
+  const G = Seq([{el: $('tgl'), label: 'Tanggal Info Posting'}, {el: $('br'), label: 'Branch'}]);
+  $('kt')._guard = G; $('kt')._opt = 'Semua toko';
+  $('br').onchange = () => { S = {}; $('kt')._arr = []; $('kt')._sub = {}; $('kt').value = ''; if (!M.branches.includes($('br').value)) return; loadStores($('br').value, false); };
+}).getMasters();
+loadDash('');
+Tabs();
+</script></body></html>
